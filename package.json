@@ -1,0 +1,14 @@
+{
+  "name": "gary-day-leg-corpus",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Auto-updating corpus of public PA legislative data for Rep. Gary Day (HD-187, member 1190).",
+  "scripts": {
+    "update": "node scripts/update-corpus.js",
+    "update:dry": "node scripts/update-corpus.js --dry-run"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

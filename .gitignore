@@ -1,0 +1,15 @@
+# dependencies
+node_modules/
+
+# secrets — never commit
+.env
+*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Internal / sensitive office material must NEVER live in this repo.
+# This corpus holds ONLY public palegis.us data (CSMs, introduced bills).
+# The SharePoint Legislation Tracker, caucus agendas, chairman's reports,
+# staff notes, and the AI-agent prompts stay OUT of git entirely.
