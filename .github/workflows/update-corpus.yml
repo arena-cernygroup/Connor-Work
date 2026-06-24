@@ -1,0 +1,39 @@
+name: Update corpus
+
+# Truly always-on updater: runs on GitHub's servers (clean network, no office
+# TLS issues), independent of any local machine. Uses the built-in GITHUB_TOKEN
+# to commit + push any newly circulated Rep. Day co-sponsorship memos.
+
+on:
+  schedule:
+    - cron: "0 12 * * 1-5" # ~7–8am ET, weekdays (cron is UTC)
+  workflow_dispatch: {} # allows manual "Run workflow" from the Actions tab
+
+permissions:
+  contents: write # let the job push commits back to the repo
+
+concurrency:
+  group: update-corpus
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Run the corpus updater
+        # On GitHub's runner the network is clean, so no --use-system-ca needed.
+        # The script fetches palegis, writes any new memos, and commits + pushes itself.
+        run: node scripts/update-corpus.js
